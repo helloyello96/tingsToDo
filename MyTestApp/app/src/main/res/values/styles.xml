@@ -8,9 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-    <style name="checkboxStyle1" >
-        <item name="color">@color/checkboxColor1</item>
-        <item name="font">@font/raleway_regular</item>
-    </style>
 </resources>
