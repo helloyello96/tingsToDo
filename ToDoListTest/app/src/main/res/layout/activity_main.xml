@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Make background-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/colorBackground"
     tools:context=".MainActivity">
-
 
     <!-- To Do List Title -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,12 +29,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- This is where the check boxes go-->
-    <LinearLayout
+    <ScrollView
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="525dp"
-        android:layout_below="@id/title_layout"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/list_layout"
         >
         <CheckBox
@@ -42,19 +45,40 @@
         android:layout_height="wrap_content"
         android:background="@drawable/cb_layout"
         android:text="Try something new"
+        android:fontFamily="@font/raleway_regular"
         />
-    </LinearLayout>
+
+    </ScrollView>
+
+    <!-- This is the bottom menu bar -->
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/list_layout"
         android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
         >
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="New Task"
+        <!-- Colo(u)r picker icon -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="55dp"
+            android:id="@+id/color_picker_icon"
+            android:src="@drawable/color_picker_icon"
+            android:onClick="onClick"
+
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"
+            />
+
+        <!-- Add Task icon-->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:id="@+id/add_task_icon"
+            android:src="@drawable/add_task"
+            android:onClick="onClick"
+
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>
