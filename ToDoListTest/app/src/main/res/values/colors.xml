@@ -7,4 +7,9 @@
 
     <!-- Checkbox default colors -->
     <color name="checkboxColor1">#F7B5AB</color>
+    <color name="checkboxColor2">#b8e7f5</color>
+
+    <!-- Checkbox color shadows -->
+    <!-- this might not work later if we need to dynamically change color scheme -->
+    <color name="shadowColor1">#f77b68</color>
 </resources>

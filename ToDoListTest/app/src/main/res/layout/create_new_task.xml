@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="30dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Task"
+        android:fontFamily="@font/sacramento_regular"
+        android:textSize="40sp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="15dp"
+        />
+    <EditText
+        android:id="@+id/new_task_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="8dp"
+        android:backgroundTint="@color/checkboxColor1"
+
+        android:hint="Enter task here"
+        android:fontFamily="@font/raleway_regular"
+
+        android:autofillHints="Buy new toaster"
+        android:inputType="text" />
+
+    <!-- Color menu -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/color1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/color_circle1"
+            android:paddingHorizontal="5dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Color Selector" />
+        <ImageButton
+            android:id="@+id/color2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/color_circle2"
+            android:paddingHorizontal="5dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Color Selector" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
