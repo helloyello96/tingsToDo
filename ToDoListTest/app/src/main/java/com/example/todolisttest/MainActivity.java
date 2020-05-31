@@ -4,12 +4,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //hide the darn title bar
+        //hides the darn title bar
         try
         {
             this.getSupportActionBar().hide();
@@ -69,7 +71,31 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater (the style inflater)
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.create_new_task, null));
+        View newTaskView = inflater.inflate(R.layout.create_new_task, null);
+        final EditText newTaskText = (EditText) newTaskView.findViewById(R.id.new_task_text);
+
+
+        builder.setView(newTaskView)
+                // The handler for create clicker
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("Create New Task Dialog", "Create button was clicked");
+
+                        String value = newTaskText.getText().toString();
+
+                        //To test - it works!!!
+                        Log.i("Create New Task Dialog", "Text: " + value);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("Create New Task Dialog", "Cancel button was clicked");
+                        dialog.dismiss();
+                    }
+                });
         AlertDialog dialog = builder.create();
         return dialog;
     }

@@ -43,7 +43,7 @@
         <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/cb_layout"
+        android:background="@drawable/checkbox_style"
         android:text="Try something new"
         android:fontFamily="@font/raleway_regular"
         />
