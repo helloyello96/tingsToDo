@@ -59,7 +59,7 @@
                 android:id="@+id/color_button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/color_circle2"
+                android:background="@drawable/new_task_color2"
                 android:layout_marginHorizontal="5dp"
                 android:button="@android:color/transparent"
                 android:onClick="onRadioButtonClicked"/>

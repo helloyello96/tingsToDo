@@ -12,4 +12,5 @@
     <!-- Checkbox color shadows -->
     <!-- this might not work later if we need to dynamically change color scheme -->
     <color name="shadowColor1">#f77b68</color>
+    <color name="shadowColor2">#5bd7fc</color>
 </resources>
