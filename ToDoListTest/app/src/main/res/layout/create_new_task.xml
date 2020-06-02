@@ -38,22 +38,33 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/color1"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/color_circle1"
-            android:paddingHorizontal="5dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="Color Selector" />
-        <ImageButton
-            android:id="@+id/color2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/color_circle2"
-            android:paddingHorizontal="5dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="Color Selector" />
+            android:orientation="horizontal"
+            android:id="@+id/select_color"
+
+            android:checkedButton="@id/color_button1">
+
+            <RadioButton
+                android:id="@+id/color_button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/new_task_color1"
+                android:layout_marginHorizontal="5dp"
+                android:button="@android:color/transparent"
+                android:onClick="onRadioButtonClicked"/>
+
+            <RadioButton
+                android:id="@+id/color_button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/color_circle2"
+                android:layout_marginHorizontal="5dp"
+                android:button="@android:color/transparent"
+                android:onClick="onRadioButtonClicked"/>
+
+        </RadioGroup>
 
     </LinearLayout>
 
