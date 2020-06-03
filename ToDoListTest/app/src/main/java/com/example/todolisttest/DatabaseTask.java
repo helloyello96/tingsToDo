@@ -6,13 +6,13 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class DatabaseTask {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int tid;
 
     @ColumnInfo(name = "task_text")
     public String taskText;
 
     @ColumnInfo(name = "task_color")
-    public String taskColor;
+    public int taskColor;
 
 }

@@ -1,20 +1,27 @@
 package com.example.todolisttest;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         catch (NullPointerException e){}
 
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").build();
+                AppDatabase.class, "Task Database").build();
 
 
         setContentView(R.layout.activity_main);
@@ -89,17 +96,21 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(newTaskView)
                 // The handler for create clicker
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.i("Create New Task Dialog", "Create button was clicked");
                         String value = newTaskText.getText().toString();
-
                         int selectedColor = colorBar.getCheckedRadioButtonId();
+
                         if(selectedColor == -1){
                             Log.i("Color Bar", "No color was selected");
                         }
                         else{
                             Log.i("Color Bar", "Color id selected: " + selectedColor);
+                            CheckBox newTask = makeCheckbox(value, selectedColor);
+                            LinearLayout taskList = findViewById(R.id.list_layout);
+                            taskList.addView(newTask);
                         }
 
                         //To test - it works!!!
@@ -118,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         return dialog;
     }
 
+    //I don't actually need this... I think
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -135,6 +147,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public CheckBox makeCheckbox(String text, int radioColorId){
+        Log.i("Create Checkbox", "Method has been called");
+        int taskColor = -1;
+        CheckBox newTask = new CheckBox(getActivity());
+
+        // Set width, height, text and font
+        ViewGroup.LayoutParams checkboxLayout;
+        checkboxLayout = new ViewGroup.LayoutParams
+                (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        newTask.setLayoutParams(checkboxLayout);
+        newTask.setText(text);
+        newTask.setTypeface(getResources().getFont(R.font.raleway_regular));
+
+        // Figure out which color to use
+        switch(radioColorId) {
+            case R.id.color_button1:
+                Log.i("Color Radio Clicked","Color1");
+                newTask.setBackground(getDrawable(R.drawable.checkbox_style));
+                taskColor = 1;
+                break;
+            case R.id.color_button2:
+                newTask.setBackground(getDrawable(R.drawable.checkbox_style2));
+                taskColor = 2;
+                break;
+        }
+
+        // Save new task to database
+//        DatabaseTask newDbTask = new DatabaseTask();
+//        newDbTask.taskText = text;
+//        newDbTask.taskColor = taskColor;
+//        db.taskDao().insertOne(newDbTask);
+
+        Log.i("Create Checkbox", "User chose this color: " + taskColor);
+        return newTask;
+    }
 
 
     // Extras to handle contextual asks
