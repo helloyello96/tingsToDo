@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
     public void onClick(View v) {
         int viewId = v.getId();
         switch (viewId) {
@@ -109,8 +108,15 @@ public class MainActivity extends AppCompatActivity {
                         else{
                             Log.i("Color Bar", "Color id selected: " + selectedColor);
                             CheckBox newTask = makeCheckbox(value, selectedColor);
+
+                            //Set margin so that it doesn't stick to the task above it
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
+                                    (ViewGroup.LayoutParams.MATCH_PARENT,
+                                            ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                            params.setMargins(0,5,0,0);
                             LinearLayout taskList = findViewById(R.id.list_layout);
-                            taskList.addView(newTask);
+                            taskList.addView(newTask, params);
                         }
 
                         //To test - it works!!!
@@ -129,24 +135,6 @@ public class MainActivity extends AppCompatActivity {
         return dialog;
     }
 
-    //I don't actually need this... I think
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.color_button1:
-                if (checked)
-                    Log.i("Color Radio Clicked","Color1");
-                    break;
-            case R.id.color_button2:
-                if (checked)
-                    Log.i("Color Radio Clicked","Color2");
-                    break;
-        }
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public CheckBox makeCheckbox(String text, int radioColorId){
         Log.i("Create Checkbox", "Method has been called");
@@ -157,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup.LayoutParams checkboxLayout;
         checkboxLayout = new ViewGroup.LayoutParams
                 (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         newTask.setLayoutParams(checkboxLayout);
         newTask.setText(text);
         newTask.setTypeface(getResources().getFont(R.font.raleway_regular));
@@ -194,6 +183,24 @@ public class MainActivity extends AppCompatActivity {
         return this;
     }
 
+
+    //I don't actually need this... I think
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.color_button1:
+                if (checked)
+                    Log.i("Color Radio Clicked","Color1");
+                break;
+            case R.id.color_button2:
+                if (checked)
+                    Log.i("Color Radio Clicked","Color2");
+                break;
+        }
+    }
 
     // change color
         //open color picker
