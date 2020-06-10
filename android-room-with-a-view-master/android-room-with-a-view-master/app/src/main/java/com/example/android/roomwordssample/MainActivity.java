@@ -71,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mTaskViewModel.getColorLegend().observe(this, new Observer<List<ColorPriority>>() {
+            @Override
+            public void onChanged(List<ColorPriority> colorPriorities) {
+                Log.i("Color Legend change", "It seems to have noticed a change");
+
+                Log.i("Color Legend change", "Look: " + colorPriorities.size());
+            }
+        });
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +96,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (!taskText.isEmpty()) {
             Task task = new Task(taskText, 1);
+            ColorPriority cp = new ColorPriority();
+            cp.setHexcolor("FFFFFF");
+            cp.setPriority(2);
             mTaskViewModel.insert(task);
+            mTaskViewModel.insertColor(cp);
         } else {
             Toast.makeText(
                     getApplicationContext(),

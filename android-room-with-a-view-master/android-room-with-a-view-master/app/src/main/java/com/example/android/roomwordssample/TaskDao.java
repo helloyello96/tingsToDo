@@ -41,7 +41,7 @@ public interface TaskDao {
     // data has changed. Since we are getting all the contents of the database,
     // we are notified whenever any of the database contents have changed.
     @Query("SELECT * from task_table ORDER BY task_text ASC")
-    LiveData<List<Task>> getAlphabetizedWords();
+    LiveData<List<Task>> getSavedTasks();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Task task);

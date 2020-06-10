@@ -16,6 +16,7 @@ package com.example.android.roomwordssample;
  * limitations under the License.
  */
 
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -32,10 +33,11 @@ import java.util.concurrent.Executors;
  * app, consider exporting the schema to help you with migrations.
  */
 
-@Database(entities = {Task.class}, version = 1, exportSchema = false)
+@Database(entities = {Task.class, ColorPriority.class}, version = 2, exportSchema = false)
 abstract class TaskRoomDatabase extends RoomDatabase {
 
     abstract TaskDao taskDao();
+    abstract ColorDao colorDao();
 
     // marking the instance as volatile to ensure atomic access to the variable
     private static volatile TaskRoomDatabase INSTANCE;
@@ -44,11 +46,21 @@ abstract class TaskRoomDatabase extends RoomDatabase {
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     static TaskRoomDatabase getDatabase(final Context context) {
+
+        final Migration MIGRATION_1_2 = new Migration(1, 2) {
+            @Override
+            public void migrate(SupportSQLiteDatabase database) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS color_priorities" +
+                        "(hexcolor TEXT, color_priority INTEGER NOT NULL PRIMARY KEY)");
+            }
+        };
+
         if (INSTANCE == null) {
             synchronized (TaskRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TaskRoomDatabase.class, "task_database")
+                            .addMigrations(MIGRATION_1_2)
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -71,9 +83,9 @@ abstract class TaskRoomDatabase extends RoomDatabase {
 
             // If you want to keep data through app restarts,
             // comment out the following block
-//            databaseWriteExecutor.execute(() -> {
-//                // Populate the database in the background.
-//                // If you want to start with more words, just add them.
+            databaseWriteExecutor.execute(() -> {
+                // Populate the database in the background.
+                // If you want to start with more words, just add them.
 //                TaskDao dao = INSTANCE.taskDao();
 //                dao.deleteAll();
 //
@@ -81,7 +93,12 @@ abstract class TaskRoomDatabase extends RoomDatabase {
 //                dao.insert(task);
 //                task = new Task("World",1);
 //                dao.insert(task);
-//            });
+                ColorDao cDao = INSTANCE.colorDao();
+                cDao.deleteAll();
+
+                ColorPriority colorPriority = new ColorPriority(1, "000000");
+                cDao.insert(colorPriority);
+            });
         }
     };
 }

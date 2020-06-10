@@ -34,19 +34,28 @@ public class TaskViewModel extends AndroidViewModel {
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    private LiveData<List<Task>> mAllWords;
+    private LiveData<List<Task>> mAllTasks;
+    private LiveData<List<ColorPriority>> mColorLegend;
 
     public TaskViewModel(Application application) {
         super(application);
         mRepository = new TaskRepository(application);
-        mAllWords = mRepository.getAllTasks();
+        mAllTasks = mRepository.getAllTasks();
+        mColorLegend = mRepository.getNewColors();
     }
 
     LiveData<List<Task>> getAllTasks() {
-        return mAllWords;
+        return mAllTasks;
     }
 
     void insert(Task task) {
         mRepository.insert(task);
     }
+
+    LiveData<List<ColorPriority>> getColorLegend(){
+        return mColorLegend;
+    }
+
+    void insertColor (ColorPriority color) {
+        mRepository.insertColor(color);}
 }

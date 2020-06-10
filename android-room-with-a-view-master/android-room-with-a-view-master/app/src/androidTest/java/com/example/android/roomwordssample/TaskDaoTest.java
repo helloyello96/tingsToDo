@@ -70,7 +70,7 @@ public class TaskDaoTest {
     public void insertAndGetWord() throws Exception {
         Task task = new Task("word", 1);
         mTaskDao.insert(task);
-        List<Task> allTasks = LiveDataTestUtil.getValue(mTaskDao.getAlphabetizedWords());
+        List<Task> allTasks = LiveDataTestUtil.getValue(mTaskDao.getSavedTasks());
         assertEquals(allTasks.get(0).getTask(), task.getTask());
     }
 
@@ -80,7 +80,7 @@ public class TaskDaoTest {
         mTaskDao.insert(task);
         Task task2 = new Task("bbb",1 );
         mTaskDao.insert(task2);
-        List<Task> allTasks = LiveDataTestUtil.getValue(mTaskDao.getAlphabetizedWords());
+        List<Task> allTasks = LiveDataTestUtil.getValue(mTaskDao.getSavedTasks());
         assertEquals(allTasks.get(0).getTask(), task.getTask());
         assertEquals(allTasks.get(1).getTask(), task2.getTask());
     }
@@ -92,7 +92,7 @@ public class TaskDaoTest {
         Task task2 = new Task("word2",1 );
         mTaskDao.insert(task2);
         mTaskDao.deleteAll();
-        List<Task> allTasks = LiveDataTestUtil.getValue(mTaskDao.getAlphabetizedWords());
+        List<Task> allTasks = LiveDataTestUtil.getValue(mTaskDao.getSavedTasks());
         assertTrue(allTasks.isEmpty());
     }
 }

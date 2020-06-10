@@ -29,7 +29,9 @@ import java.util.List;
 class TaskRepository {
 
     private TaskDao mTaskDao;
+    private ColorDao mColorDao;
     private LiveData<List<Task>> mAllTasks;
+    private LiveData<List<ColorPriority>> mColorLegend;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -38,7 +40,10 @@ class TaskRepository {
     TaskRepository(Application application) {
         TaskRoomDatabase db = TaskRoomDatabase.getDatabase(application);
         mTaskDao = db.taskDao();
-        mAllTasks = mTaskDao.getAlphabetizedWords();
+        mColorDao = db.colorDao();
+        mAllTasks = mTaskDao.getSavedTasks();
+        mColorLegend = mColorDao.getColorLegend();
+
     }
 
     // Room executes all queries on a separate thread.
@@ -47,11 +52,19 @@ class TaskRepository {
         return mAllTasks;
     }
 
+    LiveData<List<ColorPriority>> getNewColors() {return mColorLegend;}
+
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Task task) {
         TaskRoomDatabase.databaseWriteExecutor.execute(() -> {
             mTaskDao.insert(task);
+        });
+    }
+
+    void insertColor(ColorPriority color){
+        TaskRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mColorDao.insert(color);
         });
     }
 }
