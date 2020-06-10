@@ -29,7 +29,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- This is where the check boxes go-->
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/scrollView"
+        android:id="@+id/task_view"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <!-- This is the bottom menu bar -->
     <RelativeLayout

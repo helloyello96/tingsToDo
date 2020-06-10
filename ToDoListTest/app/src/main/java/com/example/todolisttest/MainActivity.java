@@ -1,13 +1,20 @@
 package com.example.todolisttest;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +30,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
     //Initialize the database
-    AppDatabase db;
     String newTaskColor;
+    List<DatabaseTask> currTaskList;
+    private TaskViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +53,23 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "Task Database").build();
-
-
         setContentView(R.layout.activity_main);
+
+        RecyclerView recyclerView = findViewById(R.id.task_view);
+        final TaskAdapter adapter = new TaskAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        model = new ViewModelProvider(this).get(TaskViewModel.class);
+        // Add an observer on the LiveData returned by getAlphabetizedWords.
+        // The onChanged() method fires when the observed data changes and the activity is
+        // in the foreground.
+        model.getAllTasks().observe(this, databaseTasks -> {
+            // Update the cached copy of the words in the adapter.
+            currTaskList = databaseTasks;
+            adapter.setWords(databaseTasks);
+            Log.i("LivaData Observe thing", "Hello i have been called");
+        });
     }
 
     public void onClick(View v) {
@@ -128,11 +153,29 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.i("Create New Task Dialog", "Cancel button was clicked");
+                        String value = newTaskText.getText().toString();
+                        insertDatabase();
+
                         dialog.dismiss();
                     }
                 });
         AlertDialog dialog = builder.create();
         return dialog;
+    }
+
+    public void insertDatabase(){
+        // Save new task to database
+        final DatabaseTask newDbTask = new DatabaseTask();
+        newDbTask.setTaskText("hello world");
+        newDbTask.setTaskColor(1);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                // Insert Data
+                model.insert(newDbTask);
+            }
+        });
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -163,16 +206,32 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        // Save new task to database
-//        DatabaseTask newDbTask = new DatabaseTask();
-//        newDbTask.taskText = text;
-//        newDbTask.taskColor = taskColor;
-//        db.taskDao().insertOne(newDbTask);
+//
+//        testDatabase();
 
         Log.i("Create Checkbox", "User chose this color: " + taskColor);
         return newTask;
     }
 
+    public void testDatabase(){
+        Log.i("Database Test", "Entered");
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                LiveData<List<DatabaseTask>> tasks;
+                tasks = model.getAllTasks();
+
+                if(tasks != null){
+                    Log.i("Database",
+                            "Look a task: " + tasks.getValue().get(0).getTaskText());
+                }
+                else{
+                    Log.i("Database", "I don't think it saved");
+                }
+
+            }
+        });
+    }
 
     // Extras to handle contextual asks
     private Window requireActivity() {

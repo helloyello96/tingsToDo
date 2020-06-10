@@ -1,22 +1,35 @@
 package com.example.todolisttest;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
+
+import io.reactivex.Completable;
 
 @Dao
 public interface TaskDao {
     @Query("SELECT * FROM databasetask")
     List<DatabaseTask> getAll();
 
+    @Query("SELECT * FROM databasetask")
+    LiveData<List<DatabaseTask>> getAllLive();
+
     @Insert
     void insertAll(DatabaseTask... tasks);
 
     @Insert
-    void insertOne(DatabaseTask task);
+    Completable insertOne(DatabaseTask task);
+
+    @Insert
+    void insertTask(DatabaseTask task);
+
+    @Update
+    void updateTask(DatabaseTask task);
 
     @Delete
     void delete(DatabaseTask task);
