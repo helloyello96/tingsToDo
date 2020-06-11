@@ -18,4 +18,13 @@ limitations under the License. -->
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="buttonLabel">#FFFFFF</color>
+
+    <!-- Checkbox default colors -->
+    <color name="highPriority">#F7B5AB</color>
+    <color name="lowPriority">#b8e7f5</color>
+
+    <!-- Checkbox color shadows -->
+    <!-- this might not work later if we need to dynamically change color scheme -->
+    <color name="shadowColor1">#f77b68</color>
+    <color name="shadowColor2">#5bd7fc</color>
 </resources>

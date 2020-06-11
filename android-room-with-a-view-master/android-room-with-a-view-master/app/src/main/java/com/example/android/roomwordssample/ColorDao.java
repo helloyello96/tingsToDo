@@ -14,7 +14,7 @@ public interface ColorDao {
     @Query("SELECT * from color_priorities ORDER BY color_priority ASC")
     LiveData<List<ColorPriority>> getColorLegend();
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ColorPriority colorPriority);
 
     @Query("DELETE FROM color_priorities")

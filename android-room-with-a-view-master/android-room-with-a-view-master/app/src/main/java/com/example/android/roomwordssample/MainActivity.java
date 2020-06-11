@@ -18,6 +18,7 @@ package com.example.android.roomwordssample;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +44,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    public static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
 
     private TaskViewModel mTaskViewModel;
 
@@ -86,10 +87,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog myDialog = createNewTaskDialog();
                 myDialog.show();
-//                Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
-//                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
+
+//        FloatingActionButton settings = findViewById(R.id.goto_settings);
+//        settings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//                startActivityForResult(intent, SETTINGS_ACTIVITY_REQUEST_CODE);
+//            }
+//        });
     }
 
     public void onDialogOkay(String taskText) {
@@ -127,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //To test - it works!!!
                         Log.i("Create New Task Dialog", "Text: " + value);
-                        onDialogOkay("This is a test");
+                        onDialogOkay(value);
                         dialog.dismiss();
                     }
                 })

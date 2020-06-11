@@ -17,11 +17,17 @@ package com.example.android.roomwordssample;
  */
 
 import android.content.Context;
+
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
 import java.util.List;
 
@@ -29,11 +35,11 @@ import java.util.List;
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder> {
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
-        private final TextView taskItemView;
+        private final CheckBox taskItemView;
 
         private TaskViewHolder(View itemView) {
             super(itemView);
-            taskItemView = itemView.findViewById(R.id.textView);
+            taskItemView = itemView.findViewById(R.id.task_checkbox);
         }
     }
 
@@ -55,11 +61,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         if (mTasks != null) {
             Task current = mTasks.get(position);
             holder.taskItemView.setText(current.getTask());
+//            holder.taskItemView.setBackground(res.getDrawable(R.drawable.checkbox_style));
         } else {
             // Covers the case of data not being ready yet.
             holder.taskItemView.setText("No Word");
         }
     }
+
 
     void setTasks(List<Task> tasks) {
         mTasks = tasks;

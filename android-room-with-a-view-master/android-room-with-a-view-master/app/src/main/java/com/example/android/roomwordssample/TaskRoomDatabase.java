@@ -98,6 +98,8 @@ abstract class TaskRoomDatabase extends RoomDatabase {
 
                 ColorPriority colorPriority = new ColorPriority(1, "000000");
                 cDao.insert(colorPriority);
+                colorPriority = new ColorPriority(2, "F7B5AB");
+                cDao.insert(colorPriority);
             });
         }
     };
