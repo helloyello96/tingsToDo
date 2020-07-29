@@ -90,14 +90,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        FloatingActionButton settings = findViewById(R.id.goto_settings);
-//        settings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-//                startActivityForResult(intent, SETTINGS_ACTIVITY_REQUEST_CODE);
-//            }
-//        });
+        FloatingActionButton settings = findViewById(R.id.goto_settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivityForResult(intent, SETTINGS_ACTIVITY_REQUEST_CODE);
+            }
+        });
     }
 
     public void onDialogOkay(String taskText) {

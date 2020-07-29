@@ -54,6 +54,15 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        final Button backButton = findViewById(R.id.settings_back);
+        backButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
     }
 }
 
